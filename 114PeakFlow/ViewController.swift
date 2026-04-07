@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  114PeakFlow
 //
-//  Created by Роман Главацкий on 04.04.2026.
-//
+
 
 import UIKit
 
