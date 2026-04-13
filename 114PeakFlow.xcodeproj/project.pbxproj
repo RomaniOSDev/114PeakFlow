@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30CB350E2F8CE6F200699281 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB35092F8CE6F200699281 /* PersistenceManager.swift */; };
+		30CB350F2F8CE6F200699281 /* SaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB350B2F8CE6F200699281 /* SaveService.swift */; };
+		30CB35102F8CE6F200699281 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB35082F8CE6F200699281 /* AppRouter.swift */; };
+		30CB35112F8CE6F200699281 /* PrivacyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB350A2F8CE6F200699281 /* PrivacyWebView.swift */; };
+		30CB35122F8CE6F200699281 /* StartMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB350C2F8CE6F200699281 /* StartMainView.swift */; };
 		746A1ED12F853E2E0076A047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 746A1EC72F853E2E0076A047 /* Assets.xcassets */; };
 		746A1ED32F853E2E0076A047 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 746A1ECB2F853E2E0076A047 /* LaunchScreen.storyboard */; };
 		746A1ED42F853E2E0076A047 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 746A1ECD2F853E2E0076A047 /* Main.storyboard */; };
@@ -43,6 +48,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30CB35082F8CE6F200699281 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		30CB35092F8CE6F200699281 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		30CB350A2F8CE6F200699281 /* PrivacyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyWebView.swift; sourceTree = "<group>"; };
+		30CB350B2F8CE6F200699281 /* SaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveService.swift; sourceTree = "<group>"; };
+		30CB350C2F8CE6F200699281 /* StartMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMainView.swift; sourceTree = "<group>"; };
 		595FDFC3C42618BAE68BF795 /* Pods-114PeakFlow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-114PeakFlow.release.xcconfig"; path = "Target Support Files/Pods-114PeakFlow/Pods-114PeakFlow.release.xcconfig"; sourceTree = "<group>"; };
 		746A0B072F814E1B0076A047 /* 114PeakFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 114PeakFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		746A1E9D2F853E2E0076A047 /* AchievementCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCard.swift; sourceTree = "<group>"; };
@@ -109,6 +119,18 @@
 				B4CA381A2B1C543C78C82F9D /* Pods_114PeakFlow.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		30CB350D2F8CE6F200699281 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				30CB35082F8CE6F200699281 /* AppRouter.swift */,
+				30CB35092F8CE6F200699281 /* PersistenceManager.swift */,
+				30CB350A2F8CE6F200699281 /* PrivacyWebView.swift */,
+				30CB350B2F8CE6F200699281 /* SaveService.swift */,
+				30CB350C2F8CE6F200699281 /* StartMainView.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		746A0AFE2F814E1B0076A047 = {
@@ -286,6 +308,7 @@
 				746A1ECD2F853E2E0076A047 /* Main.storyboard */,
 				746A1ECE2F853E2E0076A047 /* SceneDelegate.swift */,
 				746A1ECF2F853E2E0076A047 /* ViewController.swift */,
+				30CB350D2F8CE6F200699281 /* Router */,
 			);
 			path = 114PeakFlow;
 			sourceTree = "<group>";
@@ -397,6 +420,11 @@
 				746A1EDC2F853E2E0076A047 /* PeakVisualStyle.swift in Sources */,
 				746A1EDD2F853E2E0076A047 /* View+PeakForm.swift in Sources */,
 				746A1EDE2F853E2E0076A047 /* PeakModels.swift in Sources */,
+				30CB350E2F8CE6F200699281 /* PersistenceManager.swift in Sources */,
+				30CB350F2F8CE6F200699281 /* SaveService.swift in Sources */,
+				30CB35102F8CE6F200699281 /* AppRouter.swift in Sources */,
+				30CB35112F8CE6F200699281 /* PrivacyWebView.swift in Sources */,
+				30CB35122F8CE6F200699281 /* StartMainView.swift in Sources */,
 				746A1EDF2F853E2E0076A047 /* DateFormatting.swift in Sources */,
 				746A1EE02F853E2E0076A047 /* PeakExternalLink.swift in Sources */,
 				746A1EE12F853E2E0076A047 /* PeakFlowViewModel.swift in Sources */,
@@ -463,7 +491,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sha.p34kfl0w4dv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -501,7 +529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sha.p34kfl0w4dv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
