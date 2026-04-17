@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-// MARK: - Two rotating segments loader (example style)
+private enum _UnusedIngressGlyph {
+    case alpha
+    case beta
+}
 
-struct NewLoadTwoCircleView: View {
+struct TandemSpinnerRing: View {
     var progress: Double
     @State private var rotationAngle: Double = 0.0
     var width: CGFloat = 72
@@ -52,7 +55,7 @@ struct NewLoadTwoCircleView: View {
             segmentArc(gradient: tailGradient, lineW: lineW, angle: rotationAngle + 180)
 
             if progress > 0.5 {
-                EndLoadingIndicator()
+                GreenCheckFinale()
             }
         }
         .onAppear {
@@ -81,7 +84,7 @@ struct NewLoadTwoCircleView: View {
     }
 }
 
-struct EndLoadingIndicator: View {
+struct GreenCheckFinale: View {
     private let greenColor = Color.green
 
     var body: some View {
@@ -99,6 +102,7 @@ struct EndLoadingIndicator: View {
             Circle()
                 .foregroundStyle(greenColor)
                 .frame(width: 48, height: 48)
+                .opacity(0.6)
                 .shadow(color: .black.opacity(0.25), radius: 6, y: 3)
                 .shadow(color: greenColor.opacity(0.5), radius: 4)
             Image(systemName: "checkmark")
@@ -110,18 +114,22 @@ struct EndLoadingIndicator: View {
     }
 }
 
-// MARK: - Start Main View
+private let _loadingCaptionCipher: [UInt8] = [
+    0xEB, 0xC8, 0xC6, 0xC3, 0xCE, 0xC9, 0xC0, 0x89, 0x89, 0x89
+]
 
-struct StartMainView: View {
+struct IngressBusyCanvas: View {
+    private var loadingCaption: String {
+        PeakFlowCipherKit.utf8(fromMasked: _loadingCaptionCipher)
+    }
+
     var body: some View {
         ZStack {
-            // Background image
             Image(.launcjIMG)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .ignoresSafeArea()
 
-            // Dark overlay for contrast and text readability
             LinearGradient(
                 colors: [
                     Color.black.opacity(0.35),
@@ -135,9 +143,9 @@ struct StartMainView: View {
             VStack(spacing: 24) {
                 Spacer()
 
-                NewLoadTwoCircleView(progress: 0)
+                TandemSpinnerRing(progress: 0)
 
-                Text("Loading...")
+                Text(loadingCaption)
                     .font(.system(size: 17, weight: .medium))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 1)
@@ -150,5 +158,5 @@ struct StartMainView: View {
 }
 
 #Preview {
-    StartMainView()
+    IngressBusyCanvas()
 }

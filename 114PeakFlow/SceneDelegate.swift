@@ -10,14 +10,14 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    private var appRouter: AppRouter?
+    private var routeHub: PeakFlowRouteHub?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        appRouter = AppRouter()
-        window?.rootViewController = appRouter?.initialViewController()
+        routeHub = PeakFlowRouteHub()
+        window?.rootViewController = routeHub?.produceEntryHostController()
         window?.makeKeyAndVisible()
     }
 

